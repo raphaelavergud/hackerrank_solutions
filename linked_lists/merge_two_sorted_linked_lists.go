@@ -1,5 +1,25 @@
 package linked_lists
 
+func mergeListsRecursive(headA *SinglyLinkedListNode, headB *SinglyLinkedListNode) *SinglyLinkedListNode {
+	if headA == nil {
+		return headB
+	}
+	if headB == nil {
+		return headA
+	}
+
+	// time complexity (O)^n*m
+	// but better readability
+	// and time complexity is on average, when do we handle huge lists not often.
+	if headA.data <= headB.data {
+		headA.next = mergeLists(headA.next, headB)
+		return headA
+	} else {
+		headB.next = mergeLists(headA, headB.next)
+		return headB
+	}
+}
+
 func mergeLists(headA *SinglyLinkedListNode, headB *SinglyLinkedListNode) *SinglyLinkedListNode {
 	// check if either is nil, then it will be easy.
 	if headA == nil {
@@ -26,6 +46,7 @@ func mergeLists(headA *SinglyLinkedListNode, headB *SinglyLinkedListNode) *Singl
 
 	// now time to keep comparing and finding the smaller of the two nodes.
 	// attach the smaller one to the tail, and move pointer forward if it has been attached
+	// time complexity (O)^n
 	for headA != nil && headB != nil {
 		if headA.data <= headB.data {
 			mergedListTail.next = headA
